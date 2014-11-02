@@ -46,11 +46,17 @@ function form_make($inputs){
 				if(strpos($input['rules'], 'required') !== FALSE) $req = '<small>(required)</small>';
 				else $req = '';
 
-				echo '<p><label>'.$input['label'].' '.$req.'</label><br/>'.form_upload(['name'=>$name, 'value'=>$value, 'class'=>'form-control']).'</p>';
+				echo '<p><label>'.$input['label'].' '.$req.'</label><br/>'.form_upload(array('name'=>$name, 'value'=>$value, 'class'=>'form-control')).'</p>';
 
 			}elseif($input['type'] == 'hidden'){
 
 				echo form_hidden($name, $input['value']);
+
+			}elseif($input['type'] == 'dropdown'){
+				if(array_key_exists('value', $input) === FALSE) $input['value'] = NULL;
+				if(strpos($input['rules'], 'required') !== FALSE) $req = '<small>(required)</small>';
+				else $req = '';
+				echo '<p><label>'.$input['label'].' '.$req.'</label><br/>'.form_dropdown($name, $input['options'], $input['value'], 'class="form-control"').'</p>';
 
 			}else{
 				$typer = 'form_'.$input['type'];
@@ -63,15 +69,15 @@ function form_make($inputs){
 					$value = set_value($name);
 				}
 
-				echo '<p><label>'.$input['label'].' '.$req.'</label><br/>'.$typer(['name'=>$name, 'value'=>$value, 'class'=>'form-control']).'</p>';
+				echo '<p><label>'.$input['label'].' '.$req.'</label><br/>'.$typer(array('name'=>$name, 'value'=>$value, 'class'=>'form-control')).'</p>';
 			}
 		}
 	}
 
 	if(array_key_exists('submit', $inputs) !== FALSE){
-		echo '<p>'.form_submit(['name'=>'', 'value'=>$inputs['submit']['label'], 'class'=>'btn btn-primary btn-lg btn-block']).'</p>';
+		echo '<p>'.form_submit(array('name'=>'', 'value'=>$inputs['submit']['label'], 'class'=>'btn btn-primary btn-lg btn-block')).'</p>';
 	}else{
-		echo '<p>'.form_submit(['name'=>'', 'value'=>'Submit', 'class'=>'btn btn-primary btn-lg btn-block']).'</p>';
+		echo '<p>'.form_submit(array('name'=>'', 'value'=>'Submit', 'class'=>'btn btn-primary btn-lg btn-block')).'</p>';
 	}
 
 	echo form_close();
