@@ -91,7 +91,7 @@ function valid_post($inputs){
 	
 	if($CI->input->post()){
 
-		$do_upload = [];
+		$do_upload = array();
 
 		foreach($inputs as $name=>$input){
 			if($input['type'] == 'upload'){
